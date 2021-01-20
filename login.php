@@ -13,7 +13,7 @@ header('Access-Control-Allow-Origin: *');
  //login usuarios
  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $NombreUsuario =  $_POST["NombreUsuario"];
-    $Contrasena =  $_POST["Contrasena"];
+    $Contrasena =  md5($_POST["Contrasena"]);
 
     $errores = [];
 
@@ -31,10 +31,13 @@ header('Access-Control-Allow-Origin: *');
         // $sql = "INSERT INTO usuarios (correo,NombreUsuario,Contrasena) VALUES (:correo,:NombreUsuario,:Contrasena)";
         $sql = "SELECT NombreUsuario FROM usuarios WHERE NombreUsuario = :NombreUsuario AND Contrasena = :Contrasena";
         $statement = $dbConn->prepare($sql);
+        $statement->bindValue(':NombreUsuario', $NombreUsuario);
+        $statement->bindValue(':Contrasena', $Contrasena);
         $statement->execute();
         $statement->setFetchMode(PDO::FETCH_ASSOC);
         header("HTTP/1.1 200 OK");
-        echo json_encode($sql->fetchAll());
+        echo json_encode($statement->fetchAll());
+        $_SESSION["NombreUsuario"] = $NombreUsuario;
         exit();
     }
 }
