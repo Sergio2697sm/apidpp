@@ -6,7 +6,6 @@ function connect($db) {
 
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-
         return $conn;
     }catch(PDOException $exception) {
         exit($exception->getMessage());

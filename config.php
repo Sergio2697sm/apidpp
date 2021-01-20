@@ -2,7 +2,7 @@
 $db = [
     'host' => 'localhost',
     'username' => 'root',
-    'password' => '',
+    'password' => '260697',
     'db' => 'dpp' 
 ];
 ?>
