@@ -1,6 +1,8 @@
 <?php
 include "conexion.php";
 include "config.php";
+include "respuestas.php";
+
 
 $dbConn = connect($db);
 
@@ -12,7 +14,7 @@ header('Access-Control-Allow-Origin: *');
 
  //login usuarios
  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $NombreUsuario =  $_POST["NombreUsuario"];
+    $NombreUsuario = $_POST["NombreUsuario"];
     $Contrasena =  md5($_POST["Contrasena"]);
 
     $errores = [];
