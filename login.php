@@ -36,14 +36,12 @@ header('Access-Control-Allow-Origin: *');
         $statement->bindValue(':NombreUsuario', $NombreUsuario);
         $statement->bindValue(':Contrasena', $Contrasena);
         $statement->execute();
-        $passBDDD= $statement->fetch(PDO::FETCH_ASSOC);
+        $fila= $statement->fetch(PDO::FETCH_ASSOC);
 
-        //comprueba que la contraseña introducida es la misma que la existente en BBDD
-        if($passBDDD) {
+        if($fila) {
             header("HTTP/1.1 200 OK");
             echo json_encode($statement->fetchAll());
             $_SESSION["NombreUsuario"] = $NombreUsuario;
-            var_dump("hola");
             exit();
 
         }else {
