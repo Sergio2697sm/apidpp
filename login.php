@@ -36,14 +36,16 @@ header('Access-Control-Allow-Origin: *');
         $statement->bindValue(':NombreUsuario', $NombreUsuario);
         $statement->bindValue(':Contrasena', $Contrasena);
         $statement->execute();
-        $passBDDD= $statement->fetchAll(PDO::FETCH_ASSOC);
+        $passBDDD= $statement->fetch(PDO::FETCH_ASSOC);
 
         //comprueba que la contraseña introducida es la misma que la existente en BBDD
-        if(password_verify($Contrasena,$passBDDD['Contrasena'])) {
+        if($passBDDD) {
             header("HTTP/1.1 200 OK");
             echo json_encode($statement->fetchAll());
             $_SESSION["NombreUsuario"] = $NombreUsuario;
+            var_dump("hola");
             exit();
+
         }else {
             $errores[] = "Usuario o contraseña son incorrectos</br>";
             error_400($errores);
