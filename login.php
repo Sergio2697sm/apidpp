@@ -36,11 +36,25 @@ header('Access-Control-Allow-Origin: *');
         $statement->bindValue(':NombreUsuario', $NombreUsuario);
         $statement->bindValue(':Contrasena', $Contrasena);
         $statement->execute();
-        $statement->setFetchMode(PDO::FETCH_ASSOC);
-        header("HTTP/1.1 200 OK");
-        echo json_encode($statement->fetchAll());
-        $_SESSION["NombreUsuario"] = $NombreUsuario;
-        exit();
+        $passBDDD= $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if(password_verify($Contrasena,$passBDDD['Contrasena'])) {
+            header("HTTP/1.1 200 OK");
+            echo json_encode($statement->fetchAll());
+            $_SESSION["NombreUsuario"] = $NombreUsuario;
+            exit();
+        }else {
+            $errores[] = "Usuario o contraseña son incorrectos</br>";
+            error_400($errores);
+        }
+
+        // if($statement === false) {
+            
+       
+
+
+        // }
+      
     }
 }
 
